@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njs.check.dao.ApplicationMapper">
+  <resultMap id="BaseResultMap" type="com.njs.check.pojo.Application">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="apply_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="applicant_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="applicant" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="position" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="accompany" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="funds_from" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="start_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="departure" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="destination" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="transport" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="transport_beyond" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="advise" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="approval" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="advise_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="approval_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="advise_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="approval_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, apply_time, applicant_id, applicant, position, accompany, reason, funds_from, 
+    start_time, end_time, departure, destination, transport, transport_beyond, advise, 
+    approval, status, advise_id, approval_id, advise_time, approval_time
+  </sql>
+  <sql id="Base_Application_List">
+     apply_time, applicant, position, accompany, reason, funds_from,
+    start_time, end_time, departure, destination, transport, transport_beyond, advise,
+    approval, advise_time, approval_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from application
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from application
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njs.check.pojo.Application">
+    insert into application (id, apply_time, applicant_id, 
+      applicant, position, accompany, 
+      reason, funds_from, start_time, 
+      end_time, departure, destination, 
+      transport, transport_beyond, advise, 
+      approval, status, advise_id, 
+      approval_id, advise_time, approval_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{applyTime,jdbcType=TIMESTAMP}, #{applicantId,jdbcType=INTEGER}, 
+      #{applicant,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{accompany,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{fundsFrom,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{departure,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR}, 
+      #{transport,jdbcType=VARCHAR}, #{transportBeyond,jdbcType=VARCHAR}, #{advise,jdbcType=VARCHAR}, 
+      #{approval,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{adviseId,jdbcType=INTEGER}, 
+      #{approvalId,jdbcType=INTEGER}, #{adviseTime,jdbcType=TIMESTAMP}, #{approvalTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.njs.check.pojo.Application">
+    insert into application
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="applicantId != null">
+        applicant_id,
+      </if>
+      <if test="applicant != null">
+        applicant,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="accompany != null">
+        accompany,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="fundsFrom != null">
+        funds_from,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="departure != null">
+        departure,
+      </if>
+      <if test="destination != null">
+        destination,
+      </if>
+      <if test="transport != null">
+        transport,
+      </if>
+      <if test="transportBeyond != null">
+        transport_beyond,
+      </if>
+      <if test="advise != null">
+        advise,
+      </if>
+      <if test="approval != null">
+        approval,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="adviseId != null">
+        advise_id,
+      </if>
+      <if test="approvalId != null">
+        approval_id,
+      </if>
+      <if test="adviseTime != null">
+        advise_time,
+      </if>
+      <if test="approvalTime != null">
+        approval_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applicantId != null">
+        #{applicantId,jdbcType=INTEGER},
+      </if>
+      <if test="applicant != null">
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="accompany != null">
+        #{accompany,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="fundsFrom != null">
+        #{fundsFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departure != null">
+        #{departure,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null">
+        #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="transport != null">
+        #{transport,jdbcType=VARCHAR},
+      </if>
+      <if test="transportBeyond != null">
+        #{transportBeyond,jdbcType=VARCHAR},
+      </if>
+      <if test="advise != null">
+        #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="approval != null">
+        #{approval,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="adviseId != null">
+        #{adviseId,jdbcType=INTEGER},
+      </if>
+      <if test="approvalId != null">
+        #{approvalId,jdbcType=INTEGER},
+      </if>
+      <if test="adviseTime != null">
+        #{adviseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalTime != null">
+        #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njs.check.pojo.Application">
+    update application
+    <set>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applicantId != null">
+        applicant_id = #{applicantId,jdbcType=INTEGER},
+      </if>
+      <if test="applicant != null">
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="accompany != null">
+        accompany = #{accompany,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="fundsFrom != null">
+        funds_from = #{fundsFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departure != null">
+        departure = #{departure,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null">
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="transport != null">
+        transport = #{transport,jdbcType=VARCHAR},
+      </if>
+      <if test="transportBeyond != null">
+        transport_beyond = #{transportBeyond,jdbcType=VARCHAR},
+      </if>
+      <if test="advise != null">
+        advise = #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="approval != null">
+        approval = #{approval,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="adviseId != null">
+        advise_id = #{adviseId,jdbcType=INTEGER},
+      </if>
+      <if test="approvalId != null">
+        approval_id = #{approvalId,jdbcType=INTEGER},
+      </if>
+      <if test="adviseTime != null">
+        advise_time = #{adviseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalTime != null">
+        approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njs.check.pojo.Application">
+    update application
+    set apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      applicant_id = #{applicantId,jdbcType=INTEGER},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      accompany = #{accompany,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      funds_from = #{fundsFrom,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      departure = #{departure,jdbcType=VARCHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      transport = #{transport,jdbcType=VARCHAR},
+      transport_beyond = #{transportBeyond,jdbcType=VARCHAR},
+      advise = #{advise,jdbcType=VARCHAR},
+      approval = #{approval,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      advise_id = #{adviseId,jdbcType=INTEGER},
+      approval_id = #{approvalId,jdbcType=INTEGER},
+      advise_time = #{adviseTime,jdbcType=TIMESTAMP},
+      approval_time = #{approvalTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+<!--自定义mapper-->
+  <select id="getUserCheck" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from application
+    <where>
+      <if test="userId!= null and userId!= '' ">
+        applicant_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="status!=null and status!='' or status==0">
+        AND status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+    order by apply_time asc
+  </select>
+
+  <select id="getUserCheck2" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from application
+    where applicant_id = 2
+    order by apply_time asc
+  </select>
+
+  <select id="getApplicationMap" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select
+    <include refid="Base_Application_List" />
+    from application
+    where id = #{applicationId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectListByAdviseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from application
+    where advise_id = #{userId,jdbcType=INTEGER}
+    and status = #{status,jdbcType=INTEGER}
+    order by apply_time asc
+  </select>
+
+  <select id="selectListByApprovalId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from application
+    where approval_id = #{userId,jdbcType=INTEGER}
+    and status = #{status,jdbcType=INTEGER}
+    order by apply_time asc
+  </select>
+
+  <select id="getUserUnChecked" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from application
+    where applicant_id = #{userId,jdbcType=INTEGER}
+    and status in (0,2,3,5)
+  </select>
+
+  <update id="updateStatusTo1ByUserId" parameterType="java.lang.Integer">
+    update application
+    set status = 1
+    where applicant_id = #{userId,jdbcType=INTEGER}
+    and id = #{applicationId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectHisListByAdviseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from application
+    where advise_id = #{userId,jdbcType=INTEGER}
+    and status in (0,2,3)
+  </select>
+
+  <select id="selectHisListByApprovalId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from application
+    where approval_id = #{userId,jdbcType=INTEGER}
+    and status in (2,4,5)
+  </select>
+
+  <update id="updateStatusByAdviseAndTime">
+    update application
+    set status = #{status},
+        advise_time = #{dateTime}
+    where id = #{applicationId}
+    and advise_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateStatusByAdvise" parameterType="java.lang.Integer">
+    update application
+    set status = #{status}
+    where id = #{applicationId}
+    and advise_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+<!--  通过需要更新时间-->
+  <update id="updateStatusByApprovalAndTime">
+    update application
+    set status = #{status},
+        approval_time = #{dateTime}
+    where id = #{applicationId}
+    and approval_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateStatusByApproval" parameterType="java.lang.Integer">
+    update application
+    set status = #{status}
+    where id = #{applicationId}
+    and approval_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

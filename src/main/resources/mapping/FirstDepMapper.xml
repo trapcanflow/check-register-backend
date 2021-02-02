@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njs.check.dao.FirstDepMapper">
+  <resultMap id="BaseResultMap" type="com.njs.check.pojo.FirstDep">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="first_dep_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, first_dep_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from first_dep
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from first_dep
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njs.check.pojo.FirstDep">
+    insert into first_dep (id, first_dep_name)
+    values (#{id,jdbcType=INTEGER}, #{firstDepName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njs.check.pojo.FirstDep">
+    insert into first_dep
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="firstDepName != null">
+        first_dep_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="firstDepName != null">
+        #{firstDepName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njs.check.pojo.FirstDep">
+    update first_dep
+    <set>
+      <if test="firstDepName != null">
+        first_dep_name = #{firstDepName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njs.check.pojo.FirstDep">
+    update first_dep
+    set first_dep_name = #{firstDepName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from first_dep
+  </select>
+
+  <select id="getNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select first_dep_name
+    from first_dep
+    where id = #{firstDepId,jdbcType=INTEGER}
+  </select>
+</mapper>

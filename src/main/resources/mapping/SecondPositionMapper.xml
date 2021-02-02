@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njs.check.dao.SecondPositionMapper">
+  <resultMap id="BaseResultMap" type="com.njs.check.pojo.SecondPosition">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="first_position_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="second_position_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, first_position_id, second_position_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from second_position
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from second_position
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njs.check.pojo.SecondPosition">
+    insert into second_position (id, first_position_id, second_position_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{firstPositionId,jdbcType=INTEGER}, #{secondPositionName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.njs.check.pojo.SecondPosition">
+    insert into second_position
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="firstPositionId != null">
+        first_position_id,
+      </if>
+      <if test="secondPositionName != null">
+        second_position_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="firstPositionId != null">
+        #{firstPositionId,jdbcType=INTEGER},
+      </if>
+      <if test="secondPositionName != null">
+        #{secondPositionName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njs.check.pojo.SecondPosition">
+    update second_position
+    <set>
+      <if test="firstPositionId != null">
+        first_position_id = #{firstPositionId,jdbcType=INTEGER},
+      </if>
+      <if test="secondPositionName != null">
+        second_position_name = #{secondPositionName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njs.check.pojo.SecondPosition">
+    update second_position
+    set first_position_id = #{firstPositionId,jdbcType=INTEGER},
+      second_position_name = #{secondPositionName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select second_position_name
+    from second_position
+    where id = #{secondDepId,jdbcType=INTEGER}
+  </select>
+</mapper>
