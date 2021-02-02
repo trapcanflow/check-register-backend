@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    active: dev
+    servlet:
+      multipart:
+        max-request-size: 10MB
+        max-file-size: 10MB
+    jmx:
+      enabled: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/check?characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+#    username: root
+#    password: 'zzx3750322'
+    url: jdbc:mysql://120.79.185.173:3306/check?characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: remote
+    password: '!@#123NJS'
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      jpa:
+        database: mysql
+      mvc:
+        view:
+          prefix: /
+          suffix: .html
+server:
+      port: 8080
+mybatis:
+      type-aliases-package: com.njs.check.pojo;
+      mapper-locations: classpath:mapping/*.xml
+#配置freemarker
+
