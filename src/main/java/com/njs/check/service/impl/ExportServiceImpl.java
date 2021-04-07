@@ -1,10 +1,7 @@
 package com.njs.check.service.impl;
 
 import com.njs.check.common.ServerResponse;
-import com.njs.check.dao.ApplicationMapper;
-import com.njs.check.dao.PdfUrlMapper;
-import com.njs.check.dao.SecondDepMapper;
-import com.njs.check.dao.UserMapper;
+import com.njs.check.dao.*;
 import com.njs.check.pojo.Application;
 import com.njs.check.pojo.PdfUrl;
 import com.njs.check.service.ExportService;
@@ -31,6 +28,8 @@ public class ExportServiceImpl implements ExportService {
     private static final String TEMPLATEFILEPATH = "D:\\static\\pdf";
 
 
+
+
     @Autowired
     ApplicationMapper applicationMapper;
 
@@ -42,6 +41,9 @@ public class ExportServiceImpl implements ExportService {
 
     @Autowired
     PdfUrlMapper pdfUrlMapper;
+
+    @Autowired
+    QRCodeUrlMapper qrCodeUrlMapper;
 
 
     @Override
@@ -86,6 +88,7 @@ public class ExportServiceImpl implements ExportService {
     //将申请表转化为ResultMap
     public Map applicationToMap(Application application){
         String departmentName = secondDepMapper.getNameById(userMapper.getSecondDepId(application.getApplicantId()));
+        String qrCodeUrl = qrCodeUrlMapper.selectUrlByApplicationId(application.getId());
         Map<String,String> resultMap = new HashMap<>();
         resultMap.put("apply_time", DateUtil.dateToString(application.getApplyTime()));
         resultMap.put("department_name",departmentName);
@@ -104,6 +107,7 @@ public class ExportServiceImpl implements ExportService {
         resultMap.put("advise_time",DateUtil.dateToStr(application.getAdviseTime()));
         resultMap.put("approval",application.getApproval());
         resultMap.put("approval_time",DateUtil.dateToStr(application.getApprovalTime()));
+        resultMap.put("img",qrCodeUrl);
         return resultMap;
     }
 }

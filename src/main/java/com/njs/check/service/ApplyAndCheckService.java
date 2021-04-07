@@ -17,7 +17,9 @@ public interface ApplyAndCheckService {
 
     Map abolishApplication(Integer userId,Integer applicationId);
 
-    Map processTheApplication(Integer applicationId,Integer userId, Integer type);
+    Map processTheApplication(Integer applicationId,Integer userId, Integer type) throws Exception;
 
     Map getAllUserName();
+
+    Map getApplication(Integer applicationId);
 }

@@ -30,4 +30,6 @@ public interface UserMapper {
     List<String> getAllName();
 
     Integer getSecondDepId(Integer userId);
+
+    String getWeChatId(Integer userId);
 }

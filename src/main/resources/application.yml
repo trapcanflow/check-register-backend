@@ -7,6 +7,7 @@ spring:
         max-file-size: 10MB
     jmx:
       enabled: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/check?characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
@@ -36,10 +37,12 @@ spring:
         view:
           prefix: /
           suffix: .html
+
 server:
       port: 8080
 mybatis:
       type-aliases-package: com.njs.check.pojo;
       mapper-locations: classpath:mapping/*.xml
+
 #配置freemarker
 

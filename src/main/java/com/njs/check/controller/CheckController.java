@@ -27,8 +27,11 @@ public class CheckController {
 
     @GetMapping("/checkApp")
     @ApiOperation(value = "审批申请操作",notes = "需要传入申请表单id，和用户id和type，type为0通过，type为1则拒绝",httpMethod = "GET")
-    public Map checkApplication(Integer applicationId,Integer userId,Integer type){
+    public Map checkApplication(Integer applicationId,Integer userId,Integer type) throws Exception {
         return applyAndCheckService.processTheApplication(applicationId,userId,type);
     }
 
+    @GetMapping("/getApplication")
+    @ApiOperation(value = "获得申请表" )
+    public Map getApplication(Integer applicationId){ return applyAndCheckService.getApplication(applicationId);}
 }

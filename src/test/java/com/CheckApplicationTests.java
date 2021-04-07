@@ -1,13 +1,17 @@
 package com;
 
 import com.njs.check.dao.ApplicationMapper;
+import com.njs.check.dao.QRCodeUrlMapper;
 import com.njs.check.dao.SecondDepMapper;
 import com.njs.check.dao.UserMapper;
 import com.njs.check.pojo.Application;
+import com.njs.check.pojo.QRCodeUrl;
 import com.njs.check.service.ExportService;
 import com.njs.check.service.impl.ExportServiceImpl;
 import com.njs.check.utils.DateUtil;
 import com.njs.check.utils.FreeMarkerUtils;
+import com.njs.check.utils.QRCodeUtil;
+import com.njs.check.utils.WeChatUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,14 +20,16 @@ import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.njs.check.utils.PdfUtil.createPdfStream;
 
 @SpringBootTest
 class CheckApplicationTests {
+
+    private static final String QRCODEPATH = "D:\\static\\qrcode";
+
+    private static final String CONTEXTURL = "http://www.sannongai.cn/checkCode/#/applicationId=";
 
     private String filePath; //文件路径
     private String fileName; //文件名称
@@ -43,6 +49,9 @@ class CheckApplicationTests {
 
     @Autowired
     SecondDepMapper secondDepMapper;
+
+    @Autowired
+    QRCodeUrlMapper qrCodeUrlMapper;
 
     @Test
     void contextLoads() {
@@ -84,7 +93,7 @@ class CheckApplicationTests {
 
     @Test
     public void exportPdf() throws IOException {
-        Application application = applicationMapper.selectByPrimaryKey(11);
+        Application application = applicationMapper.selectByPrimaryKey(215);
         Map<String,String> resultMap = applicationToMap(application);
         if(resultMap.size()==0){
             System.out.println("resultMap为空");
@@ -118,9 +127,11 @@ class CheckApplicationTests {
         resultMap.put("transport",application.getTransport());
         resultMap.put("transport_beyond",application.getTransportBeyond());
         resultMap.put("advise",application.getAdvise());
+        resultMap.put("img","D:/static/qrcode/qrcode.jpg");
         resultMap.put("advise_time",DateUtil.dateToStr(application.getAdviseTime()));
         resultMap.put("approval",application.getApproval());
         resultMap.put("approval_time",DateUtil.dateToStr(application.getApprovalTime()));
+
         return resultMap;
     }
 
@@ -131,4 +142,109 @@ class CheckApplicationTests {
        int random= (int)((Math.random()*9+1)*1000);
         System.out.println(random);
     }
+
+    //二维码生成测试
+    @Test
+    public void generateQRCode() throws Exception {
+
+        //不含Logo
+        Integer applicationId = 240;
+        Integer userId = 2;
+        String qrCodeName = applicationId+"-"+userId+System.currentTimeMillis();
+        QRCodeUtil.encode(CONTEXTURL+applicationId, null, "D:\\static\\qrcode", qrCodeName, true);
+        QRCodeUrl qrCodeUrl = new QRCodeUrl();
+        qrCodeUrl.setApplicationId(applicationId);
+        qrCodeUrl.setQrcodeUrl(QRCODEPATH+"\\"+qrCodeName+".jpg");
+        qrCodeUrlMapper.insertSelective(qrCodeUrl);
+    }
+
+    @Test
+    public void testTemplate(){
+        String[] fillData = {"报名疗休养审批","2019.1.1","海南三亚","陈政"};
+        String str = WeChatUtil.sendTemplate1("oioOG5qxZ9OJs5FnXVaqdhZ0oumc","dn9jlzOa0vzyKXwq22P9ubWeqqU-xuNQZqCNuA2q1WA","http://120.79.185.173:8080/businessStaff/index.html#/",fillData);
+        System.out.println(str);
+    }
+
+    public String convert(String s, int numRows){
+        if(numRows == 1)
+            return s;
+
+        int len = Math.min(s.length(), numRows);
+        String []rows = new String[len];
+        for(int i = 0; i< len; i++) rows[i] = "";
+        int loc = 0;
+        boolean down = false;
+
+        for(int i=0;i<s.length();i++) {
+            rows[loc] += s.substring(i,i+1);
+            if(loc == 0 || loc == numRows - 1)
+                down = !down;
+            loc += down ? 1 : -1;
+        }
+
+        String ans = "";
+        for(String row : rows) {
+            ans += row;
+        }
+        return ans;
+    }
+
+    @Test
+    public void convertTest(){
+        Map<Integer,Integer> hashMap = new HashMap<Integer, Integer>();
+//        convert("LEETCODE",3);
+      //  letterCombinations("23");
+//        int[] nums = {1,1,2};
+//        removeDuplicates(nums);
+        int i  = (1+7+1)/2;
+        System.out.println(i);
+    }
+
+    public List<String> letterCombinations(String digits) {
+        List<String> combinations = new ArrayList<String>();
+        int len = digits.length();
+        if(len==0) return combinations;
+        Map<Character,String> phoneMap = new HashMap<Character,String>();
+        phoneMap.put('2',"abc");
+        phoneMap.put('3',"def");
+        phoneMap.put('4',"ghi");
+        phoneMap.put('5',"jkl");
+        phoneMap.put('6',"mno");
+        phoneMap.put('7',"pqrs");
+        phoneMap.put('8',"tuv");
+        phoneMap.put('9',"wxyz");
+        StringBuffer sb = new StringBuffer();
+        backtrack(combinations,phoneMap,digits,0,sb);
+        return combinations;
+    }
+
+    public void backtrack(List<String> combinations,Map<Character,String> phoneMap,String digits,int                             index,StringBuffer sb){
+        if(index==digits.length()){
+            combinations.add(sb.toString());
+        }else{
+            char digit = digits.charAt(index);
+            String letter = phoneMap.get(digit);
+            int letterCount = letter.length();
+            for(int i = 0;i<letterCount;i++){
+                sb.append(letter.charAt(i));
+                backtrack(combinations,phoneMap,digits,index+1,sb);
+                sb.deleteCharAt(index);
+            }
+        }
+    }
+
+    public int removeDuplicates(int[] nums) {
+        int len = nums.length;
+        if(len==0) return 0;
+        int i=0;
+        for(int j=1;j<len;j++){
+            if(nums[j]!=nums[i])
+                i++;
+            nums[i]=nums[j];
+        }
+        return i+1;
+    }
+
+
+
 }

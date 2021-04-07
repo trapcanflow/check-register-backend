@@ -272,10 +272,17 @@
   <select id="getAllName" resultType="java.lang.String">
     select name
     from user
+    order by CONVERT(name USING gbk)
   </select>
 
   <select id="getSecondDepId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select second_dep_id
+    from user
+    where id = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getWeChatId" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select wechat_id
     from user
     where id = #{userId,jdbcType=INTEGER}
   </select>

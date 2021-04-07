@@ -1,10 +1,9 @@
 package com.njs.check.utils;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,18 +18,51 @@ public class PdfUtil {
             PdfStamper stamp = new PdfStamper(reader, ba);
 
             //使用字体
-            BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+            BaseFont bf = BaseFont.createFont("C:/Windows/Fonts/simfang.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 
             /* 获取模版中的字段 */
             AcroFields form = stamp.getAcroFields();
 
             //填充表单
-            if (resultMap != null) {
                 for (Map.Entry<String, String> entry : resultMap.entrySet()) {
+                    if(entry.getKey()=="img"){
+                        String key = entry.getKey();
+                        String imgPath = entry.getValue();
+                        int pageNo = form.getFieldPositions(key).get(0).page;
+                        Rectangle signRect = form.getFieldPositions(key).get(0).position;
+                        float x = signRect.getLeft();
+                        float y = signRect.getBottom();
+                        Image image = Image.getInstance(imgPath);
+                        PdfContentByte under = stamp.getOverContent(pageNo);
+                        image.scaleToFit(signRect.getWidth(),signRect.getHeight());
+                        image.setAbsolutePosition(x,y);
+                        under.addImage(image);
+                        continue;
+                    }
                     form.setFieldProperty(entry.getKey(), "textfont", bf, null);
                     form.setField(entry.getKey(), entry.getValue());
-                }
+
+
             }
+
+//            Map<String,String> imgmap = (Map<String,String>)resultMap.get("imgmap");
+//            for(String key : imgmap.keySet()) {
+//                String value = imgmap.get(key);
+//                String imgpath = value;
+//                int pageNo = form.getFieldPositions(key).get(0).page;
+//                Rectangle signRect = form.getFieldPositions(key).get(0).position;
+//                float x = signRect.getLeft();
+//                float y = signRect.getBottom();
+//                //根据路径读取图片
+//                Image image = Image.getInstance(imgpath);
+//                //获取图片页面
+//                PdfContentByte under = stamp.getOverContent(pageNo);
+//                //图片大小自适应
+//                image.scaleToFit(signRect.getWidth(), signRect.getHeight());
+//                //添加图片
+//                image.setAbsolutePosition(x, y);
+//                under.addImage(image);
+//            }
 
             stamp.setFormFlattening(true);//不能编辑
             stamp.close();
