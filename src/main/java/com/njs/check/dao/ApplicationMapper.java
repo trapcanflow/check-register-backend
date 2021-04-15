@@ -1,7 +1,9 @@
 package com.njs.check.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.njs.check.pojo.Application;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ public interface ApplicationMapper {
     int updateByPrimaryKeySelective(Application record);
 
     int updateByPrimaryKey(Application record);
+
 
 //  List<Application> getUserCheck(Integer userId);
 
@@ -46,4 +49,9 @@ public interface ApplicationMapper {
     int updateStatusByAdviseAndTime(Integer applicationId, Integer userId, int status, Date dateTime);
 
 //  List<Application> getUserCheck2();
+
+    List<JSONObject> getOpenApplication(Date startTime,Date endTime,int ifOpen);
+
+    List<JSONObject> getOpenOrNotApplication(Date startTime,Date endTime);
+
 }

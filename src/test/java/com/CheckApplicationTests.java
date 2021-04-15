@@ -1,5 +1,6 @@
 package com;
 
+import com.alibaba.fastjson.JSONObject;
 import com.njs.check.dao.ApplicationMapper;
 import com.njs.check.dao.QRCodeUrlMapper;
 import com.njs.check.dao.SecondDepMapper;
@@ -7,11 +8,12 @@ import com.njs.check.dao.UserMapper;
 import com.njs.check.pojo.Application;
 import com.njs.check.pojo.QRCodeUrl;
 import com.njs.check.service.ExportService;
-import com.njs.check.service.impl.ExportServiceImpl;
 import com.njs.check.utils.DateUtil;
 import com.njs.check.utils.FreeMarkerUtils;
 import com.njs.check.utils.QRCodeUtil;
 import com.njs.check.utils.WeChatUtil;
+import netscape.javascript.JSObject;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,7 @@ import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.njs.check.utils.PdfUtil.createPdfStream;
@@ -245,6 +248,23 @@ class CheckApplicationTests {
         return i+1;
     }
 
+    @Test
+    public void getWeek() {
+//        SimpleDateFormat format  = new SimpleDateFormat("YYYY-MM-dd ");
+//        Calendar c = Calendar.getInstance();
+//        c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+//        String weekStart = format.format(c.getTime())+" 00:00:00";
+//        System.out.println(weekStart);
+//
+//        Calendar ca = Calendar.getInstance();
+//        ca.setFirstDayOfWeek(Calendar.MONDAY);
+//        ca.set(Calendar.DAY_OF_WEEK, ca.getFirstDayOfWeek() + 6); // Sunday
+//        String weekEnd = format.format(ca.getTime())+" 23:59:59";
+//        System.out.println(weekEnd);
 
-
+        System.out.println(DateUtil.getDateStartOfTheWeek());
+        System.out.println(DateUtil.getDateEndOfTheWeek());
+//        List<JSONObject> a = applicationMapper.getOpenApplication(null,null);
+//        a.toString();
+    }
 }

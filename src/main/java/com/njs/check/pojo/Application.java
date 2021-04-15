@@ -45,7 +45,9 @@ public class Application {
 
     private Date approvalTime;
 
-    public Application(Integer id, Date applyTime, Integer applicantId, String applicant, String position, String accompany, String reason, String fundsFrom, Date startTime, Date endTime, String departure, String destination, String transport, String transportBeyond, String advise, String approval, Integer status, Integer adviseId, Integer approvalId, Date adviseTime, Date approvalTime) {
+    private Integer isOpen;
+
+    public Application(Integer id, Date applyTime, Integer applicantId, String applicant, String position, String accompany, String reason, String fundsFrom, Date startTime, Date endTime, String departure, String destination, String transport, String transportBeyond, String advise, String approval, Integer status, Integer adviseId, Integer approvalId, Date adviseTime, Date approvalTime, Integer isOpen) {
         this.id = id;
         this.applyTime = applyTime;
         this.applicantId = applicantId;
@@ -67,6 +69,7 @@ public class Application {
         this.approvalId = approvalId;
         this.adviseTime = adviseTime;
         this.approvalTime = approvalTime;
+        this.isOpen = isOpen;
     }
 
     public Application() {
@@ -239,5 +242,13 @@ public class Application {
 
     public void setApprovalTime(Date approvalTime) {
         this.approvalTime = approvalTime;
+    }
+
+    public Integer getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(Integer isOpen) {
+        this.isOpen = isOpen;
     }
 }

@@ -1,5 +1,6 @@
 package com.njs.check.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.njs.check.common.ServerResponse;
 import com.njs.check.dao.ApplicationMapper;
 import com.njs.check.dao.QRCodeUrlMapper;
@@ -11,7 +12,8 @@ import com.njs.check.utils.DateUtil;
 import com.njs.check.utils.QRCodeUtil;
 import com.njs.check.utils.WeChatUtil;
 import com.njs.check.vo.ApplicationVo;
-import com.njs.check.vo.UserVo;
+import org.apache.catalina.Server;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -207,6 +209,30 @@ public class ApplyAndCheckServiceImpl implements ApplyAndCheckService {
     public Map getApplication(Integer applicationId) {
         Application application = applicationMapper.selectByPrimaryKey(applicationId);
         return ServerResponse.success(application);
+    }
+
+    @Override
+    public Map getOpenApplication(Date startTime, Date endTime) {
+        if(startTime == null && endTime == null) {
+            Date weekStart = DateUtil.getDateStartOfTheWeek();
+            Date weekEnd = DateUtil.getDateEndOfTheWeek();
+            List<JSONObject> application = applicationMapper.getOpenApplication(weekStart,weekEnd,0);
+            return ServerResponse.success(application);
+        }
+        List<JSONObject> applications = applicationMapper.getOpenApplication(startTime,endTime,0);
+        return ServerResponse.success(applications);
+    }
+
+    @Override
+    public Map getOpenAndOrApplication(Date startTime, Date endTime) {
+        if(startTime == null && endTime == null) {
+            Date weekStart = DateUtil.getDateStartOfTheWeek();
+            Date weekEnd = DateUtil.getDateEndOfTheWeek();
+            List<JSONObject> application = applicationMapper.getOpenOrNotApplication(weekStart,weekEnd);
+            return ServerResponse.success(application);
+        }
+        List<JSONObject> applications = applicationMapper.getOpenOrNotApplication(startTime,endTime);
+        return ServerResponse.success(applications);
     }
 
     public List<ApplicationVo> application2ApplicationVo(List<Application> applicationList){ //将不需要展示到前端的属性去掉

@@ -39,6 +39,8 @@ public class ApplicationVo  {
 
     private Date approvalTime;
 
+    private Integer isOpen;
+
     public Integer getId() {
         return id;
     }
@@ -181,5 +183,13 @@ public class ApplicationVo  {
 
     public void setApprovalTime(Date approvalTime) {
         this.approvalTime = approvalTime;
+    }
+
+    public Integer getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(Integer isOpen) {
+        this.isOpen = isOpen;
     }
 }

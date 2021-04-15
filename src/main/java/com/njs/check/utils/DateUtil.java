@@ -3,6 +3,8 @@ package com.njs.check.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,8 @@ public class DateUtil {
     public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public static final String SHORT_FORMAT = "yyyy年MM月dd日";
+
+    public static final String SHORT_FORMAT1 = "yyyy-MM-dd";
 
     /**
      * 获取当天零点的时间
@@ -83,5 +87,28 @@ public class DateUtil {
             return false;
         }
         return true;
+    }
+
+    public static Date getDateStartOfTheWeek(){
+        SimpleDateFormat format  = new SimpleDateFormat(SHORT_FORMAT1);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        String weekStart = format.format(c.getTime());
+        return strToDate(weekStart,SHORT_FORMAT1);
+    }
+
+    public static Date getDateEndOfTheWeek(){
+        SimpleDateFormat format  = new SimpleDateFormat(SHORT_FORMAT1);
+        Calendar ca = Calendar.getInstance();
+        ca.setFirstDayOfWeek(Calendar.MONDAY);
+        ca.set(Calendar.DAY_OF_WEEK, ca.getFirstDayOfWeek() + 6); // Sunday
+        String weekEnd = format.format(ca.getTime());
+        return strToDate(weekEnd,SHORT_FORMAT1);
+    }
+
+    public static Date strToDate(String dateTimeStr,String formatStr){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(formatStr);
+        DateTime dateTime = dateTimeFormatter.parseDateTime(dateTimeStr);
+        return dateTime.toDate();
     }
 }

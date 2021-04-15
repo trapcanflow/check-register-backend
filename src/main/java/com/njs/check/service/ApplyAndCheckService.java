@@ -1,9 +1,11 @@
 package com.njs.check.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.njs.check.pojo.Application;
 import com.njs.check.vo.ApplicationVo;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -22,4 +24,8 @@ public interface ApplyAndCheckService {
     Map getAllUserName();
 
     Map getApplication(Integer applicationId);
+
+    Map getOpenApplication(Date startTime, Date endTime);
+
+    Map getOpenAndOrApplication(Date startTime, Date endTime);
 }

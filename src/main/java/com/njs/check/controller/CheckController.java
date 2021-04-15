@@ -3,13 +3,12 @@ package com.njs.check.controller;
 import com.njs.check.service.ApplyAndCheckService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -34,4 +33,10 @@ public class CheckController {
     @GetMapping("/getApplication")
     @ApiOperation(value = "获得申请表" )
     public Map getApplication(Integer applicationId){ return applyAndCheckService.getApplication(applicationId);}
+
+    @GetMapping("/getOpenAndOrApplication")
+    @ApiOperation(value = "领导获取所以的行程")
+    public Map getOpenApplication(Date startTime, Date endTime){
+        return applyAndCheckService.getOpenAndOrApplication(startTime,endTime);
+    }
 }

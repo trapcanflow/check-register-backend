@@ -1,5 +1,6 @@
 package com.njs.check.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.njs.check.service.ApplyAndCheckService;
 import com.njs.check.vo.ApplicationVo;
 import io.swagger.annotations.Api;
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -17,7 +19,7 @@ public class ApplyController {
     ApplyAndCheckService applyAndCheckService;
 
     @RequestMapping(value = "/addApply",method = RequestMethod.POST)
-    @ApiOperation(value = "填报申请",httpMethod = "POST")
+    @ApiOperation(value = "填报申请，isOpen参数代表0是公开的，1不公开",httpMethod = "POST")
     public Map addApply(@RequestBody ApplicationVo applicationVo){ return applyAndCheckService.addApply(applicationVo);}
 
     @GetMapping("/getHisList")
@@ -31,5 +33,11 @@ public class ApplyController {
     @GetMapping("/getAllUserName")
     @ApiOperation(value ="获取所有的用户姓名" )
     public Map getAllUserName(){return applyAndCheckService.getAllUserName();}
+
+    @GetMapping("/getOpenApplication")
+    @ApiOperation(value = "员工获取公开的行程")
+    public Map getOpenApplication(Date startTime,Date endTime){
+        return applyAndCheckService.getOpenApplication(startTime,endTime);
+    }
 }
 
