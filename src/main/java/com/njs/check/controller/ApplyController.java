@@ -35,8 +35,8 @@ public class ApplyController {
     public Map getAllUserName(){return applyAndCheckService.getAllUserName();}
 
     @GetMapping("/getOpenApplication")
-    @ApiOperation(value = "员工获取公开的行程")
-    public Map getOpenApplication(Date startTime,Date endTime){
+    @ApiOperation(value = "员工获取公开的行程,两个时间不传的时候默认查询本周的行程")
+    public Map getOpenApplication(String startTime,String endTime){
         return applyAndCheckService.getOpenApplication(startTime,endTime);
     }
 }

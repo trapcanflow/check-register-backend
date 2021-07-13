@@ -123,14 +123,14 @@ class CheckApplicationTests {
         resultMap.put("accompany",application.getAccompany());
         resultMap.put("reason",application.getReason());
         resultMap.put("funds_from",application.getFundsFrom());
-        resultMap.put("start_time",DateUtil.dateToStr(application.getStartTime()));
-        resultMap.put("end_time",DateUtil.dateToStr(application.getEndTime()));
+        resultMap.put("start_time",DateUtil.dateToString(application.getStartTime()));
+        resultMap.put("end_time",DateUtil.dateToString(application.getEndTime()));
         resultMap.put("departure",application.getDeparture());
         resultMap.put("destination",application.getDestination());
         resultMap.put("transport",application.getTransport());
         resultMap.put("transport_beyond",application.getTransportBeyond());
         resultMap.put("advise",application.getAdvise());
-        resultMap.put("img","D:/static/qrcode/qrcode.jpg");
+        resultMap.put("img","D:/static/qrcode/215-581615094961416.jpg");
         resultMap.put("advise_time",DateUtil.dateToStr(application.getAdviseTime()));
         resultMap.put("approval",application.getApproval());
         resultMap.put("approval_time",DateUtil.dateToStr(application.getApprovalTime()));

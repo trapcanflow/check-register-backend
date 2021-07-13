@@ -2,6 +2,8 @@ package com.njs.check.dao;
 
 import com.njs.check.pojo.FirstPosition;
 
+import java.util.List;
+
 public interface FirstPositionMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +18,6 @@ public interface FirstPositionMapper {
     int updateByPrimaryKey(FirstPosition record);
 
     String getNameById(Integer firstPositionId);
+
+    List<FirstPosition> selectAll();
 }

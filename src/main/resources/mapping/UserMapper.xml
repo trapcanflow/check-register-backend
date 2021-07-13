@@ -255,6 +255,7 @@
     from user
     where first_dep_id = #{firstDepId,jdbcType=INTEGER}
     and first_position_id = 1
+    order by CONVERT(name USING gbk)
   </select>
 
   <select id="getIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -286,4 +287,24 @@
     from user
     where id = #{userId,jdbcType=INTEGER}
   </select>
+
+  <select id="getUsersBySecondDepId" parameterType="Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where second_dep_id = #{secondDepId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAllUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+  </select>
+
+  <update id="updateFirstPositionByUserId" parameterType="Integer">
+    update user
+    set
+    first_position_id = #{roleId,jdbcType=INTEGER}
+    where id = #{userId,jdbcType=INTEGER}
+  </update>
 </mapper>

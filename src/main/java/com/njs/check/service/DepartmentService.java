@@ -10,4 +10,12 @@ public interface DepartmentService {
     Map getFirstDepList();
 
     Map getSecondDepList(Integer firstDepId);
+
+    Map getFirstPositionList();
+
+    Map getSecondPositionList(Integer firstPositionId);
+
+    Map addNewDepartment(String departmentName);
+
+    Map deleteDepartment(Integer secondDepId);
 }

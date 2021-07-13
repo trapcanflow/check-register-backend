@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njs.check.dao.SummerUrlMapper">
+  <resultMap id="BaseResultMap" type="com.njs.check.pojo.SummerUrl">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="application_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="file_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="file_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, application_id, file_url, title, file_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from summer_url
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from summer_url
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njs.check.pojo.SummerUrl">
+    insert into summer_url (id, application_id, file_url, 
+      title, file_type)
+    values (#{id,jdbcType=INTEGER}, #{applicationId,jdbcType=INTEGER}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njs.check.pojo.SummerUrl">
+    insert into summer_url
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="applicationId != null">
+        application_id,
+      </if>
+      <if test="fileUrl != null">
+        file_url,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applicationId != null">
+        #{applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njs.check.pojo.SummerUrl">
+    update summer_url
+    <set>
+      <if test="applicationId != null">
+        application_id = #{applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njs.check.pojo.SummerUrl">
+    update summer_url
+    set application_id = #{applicationId,jdbcType=INTEGER},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectListByApplicationId" parameterType="Integer" resultType="com.alibaba.fastjson.JSONObject">
+    select
+        id,
+        application_id,
+        file_url,
+        title,
+        file_type
+    from summer_url
+    where application_id = #{applicationId,jdbcType=INTEGER}
+  </select>
+</mapper>

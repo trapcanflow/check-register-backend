@@ -76,4 +76,11 @@
     from second_position
     where id = #{secondDepId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectListByFirstId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from second_position
+    where first_position_id = #{firstPositionId,jdbcType=INTEGER}
+  </select>
 </mapper>

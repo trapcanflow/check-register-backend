@@ -32,4 +32,10 @@ public interface UserMapper {
     Integer getSecondDepId(Integer userId);
 
     String getWeChatId(Integer userId);
+
+    List<User> getUsersBySecondDepId(int secondDepId);
+
+    List<User> getAllUser();
+
+    int updateFirstPositionByUserId(Integer userId, Integer roleId);
 }

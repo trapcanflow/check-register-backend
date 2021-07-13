@@ -59,7 +59,8 @@
   </update>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select *
+    select
+    <include refid="Base_Column_List" />
     from first_dep
   </select>
 

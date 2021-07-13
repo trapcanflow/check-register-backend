@@ -54,4 +54,5 @@ public interface ApplicationMapper {
 
     List<JSONObject> getOpenOrNotApplication(Date startTime,Date endTime);
 
+    Integer selectUserIdByApplicationId(Integer applicationId);
 }

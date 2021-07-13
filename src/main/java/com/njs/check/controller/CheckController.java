@@ -1,10 +1,12 @@
 package com.njs.check.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.njs.check.service.ApplyAndCheckService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,8 +37,8 @@ public class CheckController {
     public Map getApplication(Integer applicationId){ return applyAndCheckService.getApplication(applicationId);}
 
     @GetMapping("/getOpenAndOrApplication")
-    @ApiOperation(value = "领导获取所以的行程")
-    public Map getOpenApplication(Date startTime, Date endTime){
+    @ApiOperation(value = "领导获取所以的行程，两个时间不传的时候默认查询本周的行程")
+    public Map getOpenApplication(String startTime,String endTime){
         return applyAndCheckService.getOpenAndOrApplication(startTime,endTime);
     }
 }

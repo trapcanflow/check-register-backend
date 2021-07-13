@@ -55,10 +55,10 @@ public class ApplyAndCheckServiceImpl implements ApplyAndCheckService {
         Application application = new Application();
         BeanUtils.copyProperties(applicationVo,application);//将视图层转化成pojo
         Integer applicantId = userMapper.getIdByName(application.getApplicant());
-        Integer secondPositionId = userMapper.getSecondDepId(applicantId);
+        Integer secondDepId = userMapper.getSecondDepId(applicantId);
         application.setApplicantId(applicantId);
         application.setStatus(0);
-        if(secondPositionId==3){ //副所长跳过部门负责人审核这一不揍
+        if(secondDepId!=null && secondDepId==13){ //副所长跳过部门负责人审核这一不揍
             application.setStatus(2);
         }
         if(application.getPosition()==null||application.getPosition().equals("")){
@@ -212,26 +212,30 @@ public class ApplyAndCheckServiceImpl implements ApplyAndCheckService {
     }
 
     @Override
-    public Map getOpenApplication(Date startTime, Date endTime) {
+    public Map getOpenApplication(String startTime, String endTime) {
         if(startTime == null && endTime == null) {
             Date weekStart = DateUtil.getDateStartOfTheWeek();
             Date weekEnd = DateUtil.getDateEndOfTheWeek();
             List<JSONObject> application = applicationMapper.getOpenApplication(weekStart,weekEnd,0);
             return ServerResponse.success(application);
         }
-        List<JSONObject> applications = applicationMapper.getOpenApplication(startTime,endTime,0);
+        Date startDate = DateUtil.strToDate(startTime,DateUtil.SHORT_FORMAT1);
+        Date endDate = DateUtil.strToDate(endTime,DateUtil.SHORT_FORMAT1);
+        List<JSONObject> applications = applicationMapper.getOpenApplication(startDate,endDate,0);
         return ServerResponse.success(applications);
     }
 
     @Override
-    public Map getOpenAndOrApplication(Date startTime, Date endTime) {
+    public Map getOpenAndOrApplication(String startTime, String endTime) {
         if(startTime == null && endTime == null) {
             Date weekStart = DateUtil.getDateStartOfTheWeek();
             Date weekEnd = DateUtil.getDateEndOfTheWeek();
             List<JSONObject> application = applicationMapper.getOpenOrNotApplication(weekStart,weekEnd);
             return ServerResponse.success(application);
         }
-        List<JSONObject> applications = applicationMapper.getOpenOrNotApplication(startTime,endTime);
+        Date startDate = DateUtil.strToDate(startTime,DateUtil.SHORT_FORMAT1);
+        Date endDate = DateUtil.strToDate(endTime,DateUtil.SHORT_FORMAT1);
+        List<JSONObject> applications = applicationMapper.getOpenOrNotApplication(startDate,endDate);
         return ServerResponse.success(applications);
     }
 

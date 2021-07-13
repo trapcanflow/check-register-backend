@@ -97,8 +97,8 @@ public class ExportServiceImpl implements ExportService {
         resultMap.put("accompany",application.getAccompany());
         resultMap.put("reason",application.getReason());
         resultMap.put("funds_from",application.getFundsFrom());
-        resultMap.put("start_time",DateUtil.dateToStr(application.getStartTime()));
-        resultMap.put("end_time",DateUtil.dateToStr(application.getEndTime()));
+        resultMap.put("start_time",DateUtil.dateToString(application.getStartTime()));
+        resultMap.put("end_time",DateUtil.dateToString(application.getEndTime()));
         resultMap.put("departure",application.getDeparture());
         resultMap.put("destination",application.getDestination());
         resultMap.put("transport",application.getTransport());

@@ -25,7 +25,7 @@ public interface ApplyAndCheckService {
 
     Map getApplication(Integer applicationId);
 
-    Map getOpenApplication(Date startTime, Date endTime);
+    Map getOpenApplication(String startTime, String endTime);
 
-    Map getOpenAndOrApplication(Date startTime, Date endTime);
+    Map getOpenAndOrApplication(String startTime, String endTime);
 }

@@ -409,9 +409,9 @@
     select
         applicant,
         destination,
-        apply_time,
-        start_time,
-        end_time
+        DATE_FORMAT(apply_time ,'%Y-%m-%d') as applyTime,
+        DATE_FORMAT(start_time ,'%Y-%m-%d') as startTime,
+        DATE_FORMAT(end_time ,'%Y-%m-%d') as endTime
     from application
     <where>
       <if test="startTime != null ">
@@ -430,9 +430,9 @@
     select
     applicant,
     destination,
-    apply_time,
-    start_time,
-    end_time
+    DATE_FORMAT(apply_time ,'%Y-%m-%d') as applyTime,
+    DATE_FORMAT(start_time ,'%Y-%m-%d') as startTime,
+    DATE_FORMAT(end_time ,'%Y-%m-%d') as endTime
     from application
     <where>
       <if test="startTime != null ">
@@ -444,5 +444,12 @@
     </where>
     and status = 4
     order by apply_time asc
+  </select>
+
+  <select id="selectUserIdByApplicationId" parameterType="Integer" resultType="Integer">
+    select
+        applicant_id
+    from application
+    where id = #{applicationId,jdbcType=INTEGER}
   </select>
 </mapper>

@@ -2,6 +2,8 @@ package com.njs.check.dao;
 
 import com.njs.check.pojo.SecondPosition;
 
+import java.util.List;
+
 public interface SecondPositionMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +18,6 @@ public interface SecondPositionMapper {
     int updateByPrimaryKey(SecondPosition record);
 
     String getNameById(Integer secondDepId);
+
+    List<SecondPosition> selectListByFirstId(Integer firstPositionId);
 }

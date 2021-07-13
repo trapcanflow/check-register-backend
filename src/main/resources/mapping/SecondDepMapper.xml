@@ -78,7 +78,8 @@
   </select>
 
   <select id="selectListByFirstId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select *
+    select
+    <include refid="Base_Column_List" />
     from second_dep
     where first_dep_id = #{firstDepId,jdbcType=INTEGER}
   </select>
